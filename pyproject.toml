@@ -34,12 +34,12 @@ Homepage = "https://diagrams.mingrammer.com"
 Repository = "https://github.com/mingrammer/diagrams"
 
 [tool.hatch.build.targets.wheel]
-packages = ["diagrams"]
+packages = ["diagrams", "resources"]
 
-[tool.hatch.build]
+[tool.hatch.build.targets.sdist]
 include = [
-    "diagrams/**/*",
-    "resources/**/*",
+    "/diagrams",
+    "/resources",
 ]
 
 [tool.ruff.lint]
