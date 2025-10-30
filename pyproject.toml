@@ -1,30 +1,57 @@
-[tool.poetry]
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
 name = "diagrams"
 version = "0.24.4"
 description = "Diagram as Code"
-license = "MIT"
-authors = ["mingrammer <mingrammer@gmail.com>"]
+license = {text = "MIT"}
+authors = [
+    {name = "mingrammer", email = "mingrammer@gmail.com"}
+]
 readme = "README.md"
-homepage = "https://diagrams.mingrammer.com"
-repository = "https://github.com/mingrammer/diagrams"
-include = ["resources/**/*"]
+requires-python = ">=3.9"
+dependencies = [
+    "graphviz>=0.13.2,<0.21.0",
+    "jinja2>=2.10,<4.0",
+    "typed-ast>=1.5.5; python_version<'3.8'",
+]
 
-[tool.poetry.scripts]
-diagrams="diagrams.cli:main"
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.4",
+    "rope>=1.13",
+    "ruff>=0.8.0",
+    "pre-commit>=4.3.0",
+]
 
-[tool.poetry.dependencies]
-python = "^3.9"
-graphviz = ">=0.13.2,<0.21.0"
-jinja2 = ">=2.10,<4.0"
-typed-ast = {version="^1.5.5", markers="python_version<'3.8'"}
+[project.scripts]
+diagrams = "diagrams.cli:main"
 
-[tool.poetry.dev-dependencies]
-pytest = "^8.4"
-pylint = "^3.3"
-rope = "^1.13"
-isort = "^6.0"
-black = "^24.4"
-pre-commit = "^4.3.0"
+[project.urls]
+Homepage = "https://diagrams.mingrammer.com"
+Repository = "https://github.com/mingrammer/diagrams"
 
-[tool.black]
-line-length=120
+[tool.hatch.build.targets.wheel]
+packages = ["diagrams"]
+
+[tool.hatch.build]
+include = [
+    "diagrams/**/*",
+    "resources/**/*",
+]
+
+[tool.ruff.lint]
+select = [
+    "E",   # pycodestyle errors
+    "W",   # pycodestyle warnings
+    "F",   # pyflakes
+    "I",   # isort
+    "UP",  # pyupgrade
+]
+ignore = []
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
